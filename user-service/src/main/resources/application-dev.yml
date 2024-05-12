@@ -1,0 +1,55 @@
+server:
+  port: 8800
+
+OTP_VALID_DURATION: 900000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  main:
+    allow-circular-references: true
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:postgresql://localhost:5432/users?createDatabaseIfNotExist=true
+    username: admin
+    password: admin
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL81Dialect
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+      springframework:
+        web: DEBUG
+        data: DEBUG
+      boot:
+        autoconfigure:
+          data:
+            rest: DEBUG
+            jpa: DEBUG
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+
+keycloak:
+  realm: ecommerce-realm
+  resource: users
+  auth-server-url: ${KEYCLOAK_URL:http://localhost:8081}
+  ssl-required: none
+  credentials:
+    secret: ${KEYCLOAK_TOKEN:testSecret}
+  bearer-only: true
+  use-resource-role-mappings: true
+

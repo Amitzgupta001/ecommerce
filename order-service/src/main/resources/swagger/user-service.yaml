@@ -1,0 +1,321 @@
+openapi: 3.0.1
+info:
+  title: Product API
+  description: Product Information
+  version: '1.0'
+servers:
+  - url: http://localhost:8800/user-service
+    description: Generated server url
+paths:
+  /user-service/api/v1/user:
+    get:
+      tags:
+        - user-controller
+      summary: get customer by emailId
+      description: This method is used to get customer  by emailId
+      operationId: getCustomerByToken
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseUserResponse'
+    put:
+      tags:
+        - user-controller
+      summary: update customer
+      description: This method is used to update customer details  by Id
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseString'
+  /user-service/api/v1/user/updatePassword:
+    put:
+      tags:
+        - user-controller
+      summary: update password
+      description: This method is used to update customer password
+      operationId: updatePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePasswordRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseString'
+  /user-service/api/v1/user/signin:
+    post:
+      tags:
+        - user-controller
+      summary: sign-in
+      description: This method is used to sign-in. Needs email, password
+      operationId: signIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseTokenResponse'
+  /user-service/api/v1/user/register:
+    post:
+      tags:
+        - user-controller
+      summary: ' register the customers.'
+      description: This method is used to  register the customers.
+      operationId: registerCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseString'
+  /user-service/api/v1/user/registerStaff:
+    post:
+      tags:
+        - user-controller
+      summary: ' register the staff.'
+      description: This method is used to  register the customers.
+      operationId: registerStaff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseString'
+  /user-service/api/v1/user/refreshToken:
+    post:
+      tags:
+        - user-controller
+      summary: refresh-token
+      description: This method is used to refresh token. Needs refresh-token
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseTokenResponse'
+  /user-service/api/v1/user/{email}:
+    get:
+      tags:
+        - user-controller
+      summary: get customer by emailId
+      description: This method is used to get customer  by emailId
+      operationId: getCustomer
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseUserResponse'
+components:
+  schemas:
+    UpdateUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        mobileNumber:
+          type: string
+        gender:
+          type: string
+          enum:
+            - M
+            - F
+            - O
+        dob:
+          type: string
+          format: date
+    CommonResponseString:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: string
+    UpdatePasswordRequest:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+    SignInRequest:
+      required:
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    CommonResponseTokenResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/TokenResponse'
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        expiresIn:
+          type: integer
+          format: int64
+        refreshExpiresIn:
+          type: integer
+          format: int64
+        refreshToken:
+          type: string
+        scope:
+          type: string
+    UserRequest:
+      required:
+        - dob
+        - email
+        - firstName
+        - gender
+        - lastName
+        - mobileNumber
+        - userType
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        mobileNumber:
+          type: string
+        password:
+          type: string
+        gender:
+          type: string
+          enum:
+            - M
+            - F
+            - O
+        dob:
+          type: string
+          format: date
+        userType:
+          type: string
+          enum:
+            - ADMIN
+            - STAFF
+            - CUSTOMER
+    TokenRefreshRequest:
+      required:
+        - refreshToken
+      type: object
+      properties:
+        refreshToken:
+          type: string
+    CommonResponseUserResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/UserResponse'
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        mobileNumber:
+          type: string
+        gender:
+          type: string
+          enum:
+            - M
+            - F
+            - O
+        dob:
+          type: string
+          format: date
+        userType:
+          type: string
+          enum:
+            - ADMIN
+            - STAFF
+            - CUSTOMER

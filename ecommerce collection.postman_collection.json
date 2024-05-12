@@ -1,0 +1,959 @@
+{
+	"info": {
+		"_postman_id": "97216e71-cc79-4528-9a4f-2f7ffb2886d5",
+		"name": "ecommerce collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7418983"
+	},
+	"item": [
+		{
+			"name": "1. register the customers.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"Amit\",\n  \"lastName\": \"Gupta\",\n  \"email\": \"amit1@gmail.com\",\n  \"mobileNumber\": \"+91877234234\",\n  \"password\": \"amit\",\n  \"gender\": \"M\",\n  \"dob\": \"2024-05-08\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/user-service/api/v1/user/register",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				},
+				"description": "This method is used to  register the customers."
+			},
+			"response": []
+		},
+		{
+			"name": "2. sign-in as customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"amit\",\n  \"email\": \"amit1@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/user-service/api/v1/user/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"signin"
+					]
+				},
+				"description": "This method is used to sign-in. Needs email, password"
+			},
+			"response": []
+		},
+		{
+			"name": "3.  register the staff.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"Amit\",\n  \"lastName\": \"kumar\",\n  \"email\": \"staff@gmail.com\",\n  \"mobileNumber\": \"+91877234234\",\n  \"password\": \"amit\",\n  \"gender\": \"M\",\n  \"dob\": \"2024-05-08\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/user-service/api/v1/user/registerStaff",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"registerStaff"
+					]
+				},
+				"description": "This method is used to  register the customers."
+			},
+			"response": []
+		},
+		{
+			"name": "4. sign-in as staff",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"amit\",\n  \"email\": \"staff@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/user-service/api/v1/user/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"signin"
+					]
+				},
+				"description": "This method is used to sign-in. Needs email, password"
+			},
+			"response": []
+		},
+		{
+			"name": "5. get details of the user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/user-service/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. update the user details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"amit1\",\n  \"lastName\": \"Gupta\",\n  \"mobileNumber\": \"+91987654302\",\n  \"gender\": \"M\",\n  \"dob\": \"2024-05-12\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/user-service/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. update password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"oldPassword\": \"amit\",\n  \"newPassword\": \"kumar\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/user-service/api/v1/user/updatePassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"updatePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8: refresh token of the user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjZDkzYjhjMC03YjNjLTQ0OGItYTE3Mi02YWQ5NTRmMDkwODQifQ.eyJleHAiOjE3MTU1NDY2NjEsImlhdCI6MTcxNTU0NDg2MSwianRpIjoiYmRiZDIzM2QtZTVjYy00NGQ2LWJjNWItYjQ0YzBkYzNlMjY0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxL3JlYWxtcy9lY29tbWVyY2UtcmVhbG0iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvcmVhbG1zL2Vjb21tZXJjZS1yZWFsbSIsInN1YiI6ImZkMDYzODJmLTdkOTYtNDE1MS1iZjE0LWEwZWVkZDBlMDhlMyIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJ1c2VycyIsInNlc3Npb25fc3RhdGUiOiJmNGUzNWE4YS01MzFlLTQzMDYtOGI3NC1hZDQ5Y2Y3NzgzMTAiLCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiJmNGUzNWE4YS01MzFlLTQzMDYtOGI3NC1hZDQ5Y2Y3NzgzMTAifQ.W6Oorqh2myIi4RDvb5paXMQhW2yNc7B-gdWcaJYZYqc\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/user-service/api/v1/user/refreshToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"refreshToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9: logout the user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/user-service/api/v1/user/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. STAFF | add a category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryName\": \"cake\",\n  \"categoryDescription\": \"tasty cake\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Get all category",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8602/product-service/api/v1/category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8602",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. Update category by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryName\": \"CAKE\",\n  \"categoryDescription\": \"TASTY CAKE\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/category/cf7c92dd-c7db-42f4-9800-74109585dbdb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"category",
+						"cf7c92dd-c7db-42f4-9800-74109585dbdb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13. STAFF | create product in category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productName\": \"Choco cake\",\n  \"categoryId\": \"cf7c92dd-c7db-42f4-9800-74109585dbdb\",\n  \"productDescription\": \"Chocolate cake\",\n  \"productBrand\": \"Vatilal\",\n  \"productPriceCurrency\": \"INR\",\n  \"productMRP\": 300,\n  \"productSelling\": 270,\n  \"productDiscountPer\": 10\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14. get all products by category ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/product/category/cf7c92dd-c7db-42f4-9800-74109585dbdb?pageNo=0&pageSize=10&sortBy=productName&sortDir=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"product",
+						"category",
+						"cf7c92dd-c7db-42f4-9800-74109585dbdb"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "sortBy",
+							"value": "productName"
+						},
+						{
+							"key": "sortDir",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15. get Product details by id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/product/ffde2059-3e02-4647-83cb-60d4c98c4ada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"product",
+						"ffde2059-3e02-4647-83cb-60d4c98c4ada"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15. STAFF | update the product details by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"productName\": \"Choco cake2\",\n        \"productCategory\": \"cf7c92dd-c7db-42f4-9800-74109585dbdb\",\n        \"productDescription\": \"Chocolate cake\",\n        \"productImage\": null,\n        \"productBrand\": \"Vatilal\",\n        \"productInStock\": false,\n        \"productPriceCurrency\": \"INR\",\n        \"productMRP\": 300.00,\n        \"productSelling\": 270.00,\n        \"productDiscountPer\": 10.00\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/product/ffde2059-3e02-4647-83cb-60d4c98c4ada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"product",
+						"ffde2059-3e02-4647-83cb-60d4c98c4ada"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16. get inventory by productId",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/product-service/api/v1/inventory?productId=ffde2059-3e02-4647-83cb-60d4c98c4ada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"inventory"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "ffde2059-3e02-4647-83cb-60d4c98c4ada"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17. STAFF| add inventory of the product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productId\": \"ffde2059-3e02-4647-83cb-60d4c98c4ada\",\n  \"quantity\": 10\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8602/product-service/api/v1/inventory/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8602",
+					"path": [
+						"product-service",
+						"api",
+						"v1",
+						"inventory",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18: create a order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productId\": \"ffde2059-3e02-4647-83cb-60d4c98c4ada\",\n  \"quantity\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/order-service/api/v1/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"order-service",
+						"api",
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19. get all order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/order-service/api/v1/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"order-service",
+						"api",
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "20. get order by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9090/order-service/api/v1/order/b44200ba-8fa2-4d37-8cfe-58bdc8f76e7b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"order-service",
+						"api",
+						"v1",
+						"order",
+						"b44200ba-8fa2-4d37-8cfe-58bdc8f76e7b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "21. get payment link id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"orderId\": \"b44200ba-8fa2-4d37-8cfe-58bdc8f76e7b\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/order-service/api/v1/order/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"order-service",
+						"api",
+						"v1",
+						"order",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "22. web-hook from payment merchant",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"paymentID\": \"2dcae067-be3f-4d28-9528-3e509329efa9\",\n  \"status\": \"SUCCESS\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/order-service/api/v1/order/payment/webhook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"order-service",
+						"api",
+						"v1",
+						"order",
+						"payment",
+						"webhook"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

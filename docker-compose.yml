@@ -1,0 +1,161 @@
+version: "3"
+
+volumes:
+  prometheus_data: { }
+  postgres_data:
+    driver: local
+  redis-cache:
+    driver: local
+
+services:
+
+  service-discovery:
+    image: service-discovery:1.0-SNAPSHOT
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - "8761:8761"
+    networks:
+      - service-network
+
+  api-gateway:
+    image: api-gateway:1.0-SNAPSHOT
+    env_file:
+      - variables.env
+    ports:
+      - "9090:9090"
+    networks:
+      - service-network
+
+  product-service:
+    image: product-service:1.0-SNAPSHOT
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/product
+    env_file:
+      - variables.env
+    ports:
+      - "8602:8602"
+    networks:
+      - service-network
+    depends_on:
+      - db
+      - zipkin
+
+  user-service:
+    image: user-service:1.0-SNAPSHOT
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/users
+    env_file:
+      - variables.env
+    ports:
+      - "8800:8800"
+    networks:
+      - service-network
+    depends_on:
+      - db
+      - zipkin
+
+  order-service:
+    image: order-service:1.0-SNAPSHOT
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/orders
+    env_file:
+      - variables.env
+    ports:
+      - "8609:8609"
+    networks:
+      - service-network
+    depends_on:
+      - db
+      - zipkin
+
+  zipkin:
+    image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - "9411:9411"
+    networks:
+      - service-network
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    networks:
+      - service-network
+
+  db:
+    image: 'postgres:13.1-alpine'
+    command: postgres -c 'max_connections=200'
+    container_name: db
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - service-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./sql-scripts:/docker-entrypoint-initdb.d
+
+  keycloak:
+    image: 'quay.io/keycloak/keycloak:18.0.1'
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      DB_VENDOR: keyclock-db
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: keycloak
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KC_FEATURES: token-exchange,admin-fine-grained-authz
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/ecommerce-realm.json
+    ports:
+      - "8081:8080"
+    command:
+      - start-dev
+      - --import-realm && /opt/keycloak/bin/kc.sh import --file /opt/jboss/keycloak/imports/ecommerce-realm.json
+    depends_on:
+      - keyclock-db
+    networks:
+      - service-network
+    volumes:
+      - ./keyclock:/opt/jboss/keycloak/imports
+
+
+  keyclock-db:
+    image: 'postgres:13.1-alpine'
+    ports:
+      - "3306:5432"
+    volumes:
+      - postgres_data:/var/lib/postgres
+    environment:
+      POSTGRES_PASSWORD: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_DB: keycloak
+    networks:
+      - service-network
+
+networks:
+  service-network:
+    driver: bridge
+
+
+

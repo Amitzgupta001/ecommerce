@@ -1,0 +1,400 @@
+openapi: 3.0.1
+info:
+  title: Product API
+  description: Product Information
+  version: '1.0'
+servers:
+  - url: http://localhost:8602/product-service
+    description: Generated server url
+paths:
+  /product-service/api/v1/product/{productId}:
+    get:
+      tags:
+        - product-controller
+      summary: 'Get product details '
+      description: Get product details
+      operationId: getProductDetails
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseProductResponse'
+    put:
+      tags:
+        - product-controller
+      summary: update existing product
+      description: update existing product
+      operationId: updateProduct
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseProductResponse'
+  /product-service/api/v1/category/{categoryId}:
+    put:
+      tags:
+        - category-controller
+      summary: update category
+      description: update category
+      operationId: updateCategory
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseCategoryResponse'
+  /product-service/api/v1/product:
+    post:
+      tags:
+        - product-controller
+      summary: Creates new product
+      description: Creates new product
+      operationId: saveProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseProductResponse'
+  /product-service/api/v1/product/category/{categoryId}:
+    post:
+      tags:
+        - product-controller
+      summary: 'Get product by categoryId '
+      description: Get product by categoryId
+      operationId: getProductByCategoryId
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: pageNo
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            default: productName
+        - name: sortDir
+          in: query
+          required: false
+          schema:
+            type: string
+            default: asc
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponsePagingResponseProductResponse'
+  /product-service/api/v1/inventory/remove:
+    post:
+      tags:
+        - product-controller
+      summary: remove product inventory
+      description: remove product inventory
+      operationId: removeInventory
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseInventoryResponse'
+  /product-service/api/v1/inventory/add:
+    post:
+      tags:
+        - product-controller
+      summary: add product inventory
+      description: add product inventory
+      operationId: addInventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryUpdateRequest'
+        required: true
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseInventoryResponse'
+  /product-service/api/v1/category:
+    post:
+      tags:
+        - category-controller
+      summary: add new category
+      description: add new category
+      operationId: createCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseCategoryResponse'
+  /product-service/api/v1/inventory:
+    get:
+      tags:
+        - product-controller
+      summary: get product inventory
+      description: get product inventory
+      operationId: getInventory
+      parameters:
+        - name: productId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CommonResponseInventoryResponse'
+components:
+  schemas:
+    ProductRequest:
+      required:
+        - categoryId
+        - productBrand
+        - productDescription
+        - productDiscountPer
+        - productMRP
+        - productName
+        - productPriceCurrency
+        - productSelling
+      type: object
+      properties:
+        productName:
+          type: string
+        categoryId:
+          type: string
+          format: uuid
+        productDescription:
+          type: string
+        productBrand:
+          type: string
+        productPriceCurrency:
+          type: string
+        productMRP:
+          type: number
+        productSelling:
+          type: number
+        productDiscountPer:
+          type: number
+    CommonResponseProductResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/ProductResponse'
+    ProductResponse:
+      type: object
+      properties:
+        productId:
+          type: string
+          format: uuid
+        productName:
+          type: string
+        productCategory:
+          type: string
+          format: uuid
+        productDescription:
+          type: string
+        productImage:
+          type: string
+        productBrand:
+          type: string
+        productInStock:
+          type: boolean
+        productPriceCurrency:
+          type: string
+        productMRP:
+          type: number
+        productSelling:
+          type: number
+        productDiscountPer:
+          type: number
+    CategoryRequest:
+      required:
+        - categoryDescription
+        - categoryName
+      type: object
+      properties:
+        categoryName:
+          type: string
+        categoryDescription:
+          type: string
+    CategoryResponse:
+      type: object
+      properties:
+        categoryId:
+          type: string
+          format: uuid
+        categoryName:
+          type: string
+        categoryDescription:
+          type: string
+    CommonResponseCategoryResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/CategoryResponse'
+    CommonResponsePagingResponseProductResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PagingResponseProductResponse'
+    PagingResponseProductResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductResponse'
+        pageNumber:
+          type: integer
+          format: int32
+        totalItems:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    InventoryUpdateRequest:
+      required:
+        - productId
+      type: object
+      properties:
+        productId:
+          type: string
+          format: uuid
+        quantity:
+          minimum: 1
+          type: integer
+          format: int32
+    CommonResponseInventoryResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/InventoryResponse'
+    InventoryResponse:
+      type: object
+      properties:
+        productId:
+          type: string
+          format: uuid
+        productName:
+          type: string
+        totalQuantity:
+          type: integer
+          format: int32

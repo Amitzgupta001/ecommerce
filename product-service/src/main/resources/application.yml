@@ -1,0 +1,40 @@
+server:
+  servlet:
+    context-path: /product-service
+
+spring:
+  zipkin:
+    base-url: ${ZIPKIN_SERVER:http://localhost:9411/}
+  application:
+    name: PRODUCT-SERVICE
+  profiles:
+    active:
+      - dev
+
+resilience4j:
+  circuit breaker:
+    instances:
+      productService:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        wait-duration-in-open-state: 5s
+        sliding-window-type: COUNT_BASED
+
+management:
+  health:
+    circuit-breakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+
+
+
+
+
+
