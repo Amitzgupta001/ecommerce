@@ -4,8 +4,6 @@ volumes:
   prometheus_data: { }
   postgres_data:
     driver: local
-  redis-cache:
-    driver: local
 
 services:
 
@@ -26,6 +24,12 @@ services:
       - "9090:9090"
     networks:
       - service-network
+    restart: always
+    links:
+      - keycloak
+    depends_on:
+      - keycloak
+      - zipkin
 
   product-service:
     image: product-service:1.0-SNAPSHOT
@@ -136,6 +140,11 @@ services:
       - keyclock-db
     networks:
       - service-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/realms/ecommerce-realm" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     volumes:
       - ./keyclock:/opt/jboss/keycloak/imports
 

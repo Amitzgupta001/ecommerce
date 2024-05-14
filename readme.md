@@ -36,13 +36,17 @@ To get started with the project, follow these steps:
 
 1. Clone the repository.
 
-   ``git clone ``
-2. Build the project using Maven or Gradle.
-3. Configure the application properties according to your environment (e.g., database configuration, Keycloak settings).
+   ``git clone git@github.com:Amitzgupta001/ecommerce.git``
+2. Build the project using Maven and create a image in docker by:
+
+   ``mvn clean install -DskipTests com.google.cloud.tools:jib-maven-plugin:dockerBuild``
+3. Configure the application properties according to your environment (e.g., database configuration, Keycloak settings). default configuration will took automatically
+  
+   ``docker-compose up -d``
 4. Run the microservices locally or deploy them using Docker containers.
 5. Test the APIs using tools like Postman or curl.
-
-For detailed instructions on setting up and running the project, refer to the documentation provided in each microservice's README file.
+   - [Postman Collection](https://github.com/Amitzgupta001/ecommerce/blob/main/ecommerce%20collection.postman_collection.json) 
+   - 
 
 ## Contributors
 - [Amit Kumar Gupta](https://github.com/amitzgupta001)
