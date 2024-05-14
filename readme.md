@@ -1,73 +1,53 @@
-Assignment Title: Backend Engineering Challenge
+# E-Commerce backend project
 
-Introduction: In this assignment, you will build a microservices-based system that manages a simple e-commerce application. The system should handle user authentication, product management, and order processing. Emphasis will be placed on implementing concurrency control and ensuring the system can handle clustering for high availability.
+This project is built using Spring Boot 2.7 and Java 11. It incorporates various Spring modules and other technologies to create a microservices architecture.
 
-Requirements:
+## Architecture Overview
 
-Microservices Architecture:
+### Spring Boot 2.7
+Spring Boot is used as the foundation framework for building the microservices. It provides a robust and flexible platform for developing Java applications with minimal setup.
 
-Design a microservices architecture for the system, breaking it down into services for user authentication, product management, and order processing.
-Use a technology stack suitable for building and managing microservices (e.g., Spring Boot, Node.js with Express, Flask, etc.).
-Concurrency Control:
+### API Gateway
+API Gateway is implemented to manage and route incoming requests to appropriate microservices. It serves as a single entry point to the system and provides functionalities such as authentication, rate limiting, and request routing.
 
-Implement concurrent access control for the product management service. Ensure that multiple users can safely read and update product information without conflicts.
-Choose a suitable method for managing concurrent access (e.g., optimistic locking, pessimistic locking, or another approach).
-Clustering and High Availability:
+### Netflix Feign
+Netflix Feign is used for declarative REST client communication between microservices. It simplifies the process of interacting with other services by allowing developers to define interfaces and use annotations to describe the desired HTTP requests.
 
-Set up a clustering mechanism for your microservices to ensure high availability. Use a technology or framework suitable for your chosen programming language.
-Deploy the system on multiple nodes or containers, and demonstrate that the system remains available even if one node/container goes down.
-Database Integration:
+### Eureka Discovery
+Eureka is employed for service discovery and registration. It allows microservices to locate and communicate with each other without hardcoding their network locations. This enables dynamic scaling and fault tolerance within the system.
 
-Utilize a database (e.g., PostgreSQL, MySQL, MongoDB) for storing user information, product data, and order history. Design the database schema for these entities.
-Implement database connections and appropriate queries within your microservices.
-APIs and Communication:
+### Resilience Circuit Breaker
+Resilience Circuit Breaker pattern is implemented to enhance the system's resilience and fault tolerance. It helps prevent cascading failures by temporarily halting requests to a service that is experiencing issues, thereby preserving system stability.
 
-Develop RESTful APIs for each microservice, allowing them to communicate with each other.
-Implement endpoints for user registration, product CRUD, and order management.
-Ensure that microservices can make synchronous or asynchronous calls to other microservices as needed.
-Authentication and Authorization:
+### Keycloak for IAM Service
+Keycloak is utilized for Identity and Access Management (IAM) services. It provides features such as user authentication, authorization, and centralized user management. With Keycloak, the system can ensure secure and controlled access to resources.
 
-Implement user authentication and authorization for accessing protected endpoints.
-Ensure that users can only access their own orders and the products they are authorized to view/update.
-General Requirements:
+### Docker for Deployment
+Docker containers are used for deploying and running the microservices. Docker provides lightweight, portable, and self-sufficient containers that encapsulate the application and its dependencies, ensuring consistency across different environments.
 
-Code Quality: Write clean, well-documented, and maintainable code. Follow best practices for the chosen programming language and framework.
+### PostgreSQL for Database
+PostgreSQL is chosen as the relational database management system (RDBMS) for storing application data. It offers robust features, including ACID compliance, scalability, and extensibility, making it suitable for various types of applications.
 
-Version Control: Use a version control system (e.g., Git) to track changes in your code and provide a Git repository for the assessment.
+## Deployment
+The project can be deployed using Docker containers. Each microservice is packaged as a Docker image and can be deployed independently. Docker Compose or Kubernetes can be used for orchestrating and managing the containerized applications in a production environment.
 
-Error Handling: Implement comprehensive error handling and logging for the microservices.
+## Getting Started
+To get started with the project, follow these steps:
 
-Testing: Write unit tests for critical components, including concurrency control mechanisms.
+1. Clone the repository.
 
-Deployment: Provide clear instructions for deploying and running your microservices on a local development environment or a cloud platform (e.g., AWS, Azure, Google Cloud).
+   ``git clone ``
+2. Build the project using Maven or Gradle.
+3. Configure the application properties according to your environment (e.g., database configuration, Keycloak settings).
+4. Run the microservices locally or deploy them using Docker containers.
+5. Test the APIs using tools like Postman or curl.
 
-Bonus Features (Optional):
+For detailed instructions on setting up and running the project, refer to the documentation provided in each microservice's README file.
 
-Implement API rate limiting to prevent abuse.
-Use message queues for asynchronous communication between microservices.
-Implement caching strategies to improve system performance.
-Create monitoring and alerting solutions for the microservices (e.g., Prometheus and Grafana).
-Submission:
+## Contributors
+- [Amit Kumar Gupta](https://github.com/amitzgupta001)
 
-Provide a link to your version-controlled repository (e.g., GitHub, GitLab).
-Include clear instructions on how to set up and run your microservices.
-Share any additional documentation or notes that might help reviewers understand your project.
-Assessment Criteria:
+Feel free to contribute by submitting bug reports, feature requests, or pull requests!
 
-Your assignment will be evaluated based on:
-
-Microservices Architecture: Is the system structured as microservices and are they correctly divided by functionality?
-
-Concurrency Control: Is concurrent access controlled effectively, and is data integrity maintained?
-
-Clustering: Does the system demonstrate high availability and clustering capabilities?
-
-Code Quality: Is the code clean, well-documented, and maintainable?
-
-Testing: Are there unit tests for critical components and concurrency control mechanisms?
-
-Bonus Features: If implemented, do they enhance system functionality and performance?
-
-This assignment will assess your backend engineering skills, especially in microservices, concurrency control, and high availability. Good luck!
-
-P.S. Any assumptions taken while design / implementation should be documented in README file
+## License
+This project is licensed under the [MIT License](LICENSE).
